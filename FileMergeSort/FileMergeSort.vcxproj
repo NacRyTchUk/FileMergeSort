@@ -139,8 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="fileMergeSort.cpp" />
-    <ClCompile Include="stuff.cpp" />
+    <ClCompile Include="FileMergeSort.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="in1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Buffer.h" />
+    <ClInclude Include="FileMergeSort.h" />
+    <ClInclude Include="FileMergeSortIO.h" />
+    <ClInclude Include="MergeSortFileData.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
