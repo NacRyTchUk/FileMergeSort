@@ -12,9 +12,11 @@ int main(int argc, char* argv[]) {
 	for (int i = 1; i < argc; i++)
 		inputFileNames.push_back(argv[i]);
 	
-	fms::FileMergeSort fileMergeSort(inputFileNames, "out.txt", 1000 * 1000 * 50);
+	{
+		fms::FileMergeSort fileMergeSort(inputFileNames, "out.txt", 1000 * 1000 * 50);
 
-	fileMergeSort.debug_getFileIO()->printFilesData();
+		fileMergeSort.debug_getFileIO()->printFilesData();
+	}
 	std::cin.get();
 
 }

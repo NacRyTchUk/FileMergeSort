@@ -10,7 +10,7 @@ namespace fms {
 	public:
 		Buffer(uint32_t bufferByteSize) {
 			_bufferSize = bufferByteSize;
-			_buffer = new char[bufferByteSize] {};
+			_buffer = new char[bufferByteSize + 1] {};
 		}
 
 		~Buffer() {
