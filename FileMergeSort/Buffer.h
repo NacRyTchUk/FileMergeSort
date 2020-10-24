@@ -31,7 +31,7 @@ namespace fms {
 
 		~SmartBuffer() {
 			std::cout << "in buffer: " << _buffer << std::endl;
-			_fileIO->writeNewFile(_buffer, _bufferSize);
+			_fileIO->writeInNewFile(_buffer, _bufferSize);
 			delete[] _buffer;
 		}
 
@@ -61,7 +61,7 @@ namespace fms {
 			{
 				while (_bufferIterator >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
-				_fileIO->writeNewFile(_buffer, _bufferSize);
+				_fileIO->writeInNewFile(_buffer, _bufferSize);
 				clearBuffer();
 				pushBack(pushText, textLength, curLetter);
 				std::cout << "new succses push " << _bufferIterator << std::endl;
@@ -78,7 +78,7 @@ namespace fms {
 			{
 				while (_bufferIterator < _bufferSize)
 					_buffer[_bufferIterator++] = pushText[curLetter++];
-				_fileIO->writeNewFile(_buffer, _bufferSize);
+				_fileIO->writeInNewFile(_buffer, _bufferSize);
 				clearBuffer();
 				pushForward(pushText, textLength, curLetter);
 				std::cout << "new succses push " << _bufferIterator << std::endl;

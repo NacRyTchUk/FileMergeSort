@@ -14,7 +14,7 @@ namespace fms {
 			}
 		}
 
-		void writeNewFile(char * buffer, int size) {
+		void writeInNewFile(char * buffer, int size) {
 			FileData fd("~" + std::to_string(_tempFilesData.size()) + ".temp", FileType::temp);
 			_tempFilesData.push_back(fd);
 
@@ -32,6 +32,10 @@ namespace fms {
 			tempFileStream->close();
 		}
 
+		void writeInOutFile(char* buffer, int size) {
+			_validFiles[0]->write(buffer, size);
+		}
+
 		FileIO(std::vector<std::string> inputFileNames, std::string outputFileName) {
 
 			_filesDataCount = inputFileNames.size() + 1;
@@ -44,10 +48,10 @@ namespace fms {
 				_filesData[i].setData(inputFileNames[i - 1], FileType::input);
 
 			initializeValidFileList();
-
 		}
 
 		~FileIO() {
+			_validFiles[0]->close();
 			delete[] _filesData;
 		}
 
@@ -62,10 +66,13 @@ namespace fms {
 
 			if (_filesData[0].getType() == FileType::corrupt)
 				throw new std::exception("Unable to create output file");
-
+			
 			for (int i = 0; i < _filesDataCount; i++)
 				if (_filesData[i].getType() != FileType::corrupt)
 					_validFiles[_validFilesCout++] = _filesData[i].getFile();
+
+			_validFiles[0]->open(_filesData[0].getName(), std::ios_base::out | std::ios_base::trunc);
+
 
 			if (_validFilesCout < 2)
 				throw new std::exception("No input files were found, or all input files were corrupted");

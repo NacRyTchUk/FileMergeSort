@@ -28,10 +28,11 @@ namespace fms {
 			for (int i = 0; i < 10; i++)
 			{
 				ch[0] = i + '0';
-				for (int j = 0; j < 10; j++)
+				for (int j = 0; j < 4; j++)
 				{
 					ch[1] = j + '0';
-					_smartBuffer->push(ch, 3);
+					//_smartBuffer->push(ch, 3);
+					_fileIO->writeInOutFile(ch, 3);
 
 				}
 			}
