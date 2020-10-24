@@ -30,7 +30,6 @@ namespace fms {
 		}
 
 		~SmartBuffer() {
-			std::cout << "in buffer: " << _buffer << std::endl;
 			_fileIO->writeInNewFile(_buffer, _bufferSize);
 			delete[] _buffer;
 		}
@@ -53,7 +52,6 @@ namespace fms {
 		void pushBack(char* pushText, int textLength, int curLetter = -1) {
 			curLetter = (curLetter == -1) ? textLength - 1 : curLetter;
 			if (_bufferIterator - textLength + (curLetter != textLength - 1) * (curLetter) >= 0) {
-				std::cout << "succses push " << (_bufferIterator) << std::endl;
 				while (curLetter >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
 			}
@@ -64,13 +62,11 @@ namespace fms {
 				_fileIO->writeInNewFile(_buffer, _bufferSize);
 				clearBuffer();
 				pushBack(pushText, textLength, curLetter);
-				std::cout << "new succses push " << _bufferIterator << std::endl;
 			}
 		}
 
 		void pushForward(char* pushText, int textLength, int curLetter = 0) {
 			if (_bufferIterator + textLength - curLetter < _bufferSize) {
-				std::cout << "succses push " << (_bufferIterator) << std::endl;
 				while (curLetter < textLength)
 					_buffer[_bufferIterator++] = pushText[curLetter++];
 			}
@@ -81,7 +77,6 @@ namespace fms {
 				_fileIO->writeInNewFile(_buffer, _bufferSize);
 				clearBuffer();
 				pushForward(pushText, textLength, curLetter);
-				std::cout << "new succses push " << _bufferIterator << std::endl;
 			}
 		}
 

@@ -22,7 +22,7 @@ namespace fms {
 			_smartBuffer = new SmartBuffer(bufferByteSize, _sortMode, _fileIO);
 
 
-			char ch[]{'0','0','\n'};
+			char ch[5]{'0','0','\n'};
 
 
 			for (int i = 0; i < 10; i++)
@@ -30,9 +30,9 @@ namespace fms {
 				ch[0] = i + '0';
 				for (int j = 0; j < 4; j++)
 				{
-					ch[1] = j + '0';
+					//ch[1] = j + '0';
 					//_smartBuffer->push(ch, 3);
-					_fileIO->writeInOutFile(ch, 3);
+					_fileIO->writeInOutFile(ch, 5);
 
 				}
 			}

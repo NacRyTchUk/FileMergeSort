@@ -31,7 +31,7 @@ namespace fms {
 		{
 			_fileName = fileName;
 			_fileType = fileType;
-			
+			isExist();
 		}
 
 		FileData() {}
@@ -50,6 +50,13 @@ namespace fms {
 		std::string _fileName{};
 		FileType _fileType{FileType::corrupt};
 		std::fstream _file;
+
+		void isExist() {
+			std::fstream fs(_fileName);
+			if (fs.is_open() == false)
+				_fileType = FileType::corrupt;
+			fs.close();
+		}
 	};
 }
 #endif
