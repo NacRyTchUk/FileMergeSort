@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 		inputFileNames.push_back(argv[i]);
 	
 	{
-		fms::FileMergeSort fileMergeSort(inputFileNames, "out.txt", 1000 * 1000 * 50);
+		fms::FileMergeSort fileMergeSort(inputFileNames, "out.txt", fms::SortMode::increase , 23);
 
 		fileMergeSort.debug_getFileIO()->printFilesData();
 	}

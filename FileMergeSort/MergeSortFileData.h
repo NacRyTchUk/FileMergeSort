@@ -13,6 +13,10 @@ namespace fms {
 	{
 		input, output, temp, corrupt, closed
 	};
+
+	enum class SortMode {
+		decrease = -1, increase = 1
+	};
 	
 
 	class FileData
@@ -27,45 +31,25 @@ namespace fms {
 		{
 			_fileName = fileName;
 			_fileType = fileType;
-
-			open();
+			
 		}
-
-
 
 		FileData() {}
 
-		FileData(std::string fileName, FileType fileType)
+		FileData(const FileData& fd)
 		{
-			setData(fileName, fileType);
+			setData(fd._fileName, fd._fileType);
 		}
 
-		~FileData() {
-			if (_file.is_open())
-			{
-				_file.close();
-				std::cout << _fileName << " has been closed" << std::endl;
-			}
+		FileData(std::string fileName, FileType fileType)
+		{
+			setData(fileName, fileType); 
 		}
 
 	private:
 		std::string _fileName{};
 		FileType _fileType{FileType::corrupt};
 		std::fstream _file;
-
-		void open() {
-			if (_fileType == FileType::corrupt)
-				return;
-
-			_file.open(_fileName, (_fileType == FileType::input) * (std::ios_base::in) +
-					((_fileType == FileType::output) || (_fileType == FileType::temp)) * (std::ios_base::out | std::ios_base::trunc));
-
-			if (_file.is_open() == false)
-			{
-				std::cerr << _fileName << " not found" << std::endl;
-				_fileType = FileType::corrupt;
-			}
-		}
 	};
 }
 #endif

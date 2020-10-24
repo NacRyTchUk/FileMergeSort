@@ -13,20 +13,39 @@ namespace fms {
 		FileIO* debug_getFileIO() { return _fileIO; }
 
 
-		FileMergeSort(std::vector<std::string> inputFileNames, std::string outputFileName, uint32_t bufferByteSize) {
-			_streamBuffer = new Buffer(bufferByteSize);
+		FileMergeSort(std::vector<std::string> inputFileNames, std::string outputFileName, SortMode sortMode, uint32_t bufferByteSize) {
+			_sortMode = sortMode;
+
 			
 			_fileIO = new FileIO(inputFileNames, outputFileName);
+
+			_smartBuffer = new SmartBuffer(bufferByteSize, _sortMode, _fileIO);
+
+
+			char ch[]{'0','0','\n'};
+
+
+			for (int i = 0; i < 10; i++)
+			{
+				ch[0] = i + '0';
+				for (int j = 0; j < 10; j++)
+				{
+					ch[1] = j + '0';
+					_smartBuffer->push(ch, 3);
+
+				}
+			}
 		}
 
 		~FileMergeSort() {
-			delete _streamBuffer;
+			delete _smartBuffer;
 			delete _fileIO;
 			std::cout << "buffer cleaned" << std::endl;
 		}
 	private:
-		Buffer * _streamBuffer;
+		SmartBuffer * _smartBuffer;
 		FileIO* _fileIO;
+		SortMode _sortMode;
 	};
 }
 
