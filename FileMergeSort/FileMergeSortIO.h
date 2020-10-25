@@ -2,33 +2,13 @@
 #define FILE_MERGE_SORT_IO
 
 namespace fms {
+	const int MAX_LINE_BUFFER_SIZE = 1024;
 
 	class FileIO {
 	public:
-		struct SortBatchElement
-		{
-			char* _prevValue, * _curValue;
-			FileData* _fileData;
-			bool _isNeedToReread{};
-		public:
-			char* getCurValue() { return _curValue; }
-			char* getPrevValue() { return _prevValue; }
-			bool isNeedToRereed() { return _isNeedToReread; }
-
-
-			void init(char* initValue, FileData *fileData) {
-				_prevValue = _curValue = initValue;
-				_fileData = fileData;
-			}
-
-			void move(char* newValue) {
-				_prevValue = _curValue;
-				_curValue = _prevValue;
-				_isNeedToReread = false;
-				if (*_prevValue > * _curValue)
-					throw std::exception("Incorrectly sorted file");
-			}
-		};
+		
+		FileData* getFilesData() { return _filesData; }
+		
 
 		void printFilesData() {
 			for (int i = 0; i < _filesDataCount; i++)
@@ -63,22 +43,23 @@ namespace fms {
 		}
 
 		void readLineFrom(int fileInd, char * buffer, int bufferSize) {
-			_validFiles[fileInd]->getline(buffer, bufferSize);
+			if (_filesData[fileInd].getFile()->eof())
+				_filesData[fileInd].changeType(FileType::closed);
+			_filesData[fileInd].getFile()->getline(buffer, bufferSize);
 		}
 
-		/*SortBunchElement* makeBanch() {
-			if (_validFilesCout < 2)
-				return;
-		}*/
+		
 
 		FileIO(std::vector<std::string> inputFileNames, std::string outputFileName) {
 
 			_filesDataCount = inputFileNames.size() + 1;
 
 			_filesData = new FileData[_filesDataCount]{};
-			batch = new SortBatchElement[_filesDataCount]{};
 
 			_filesData[0].setData(outputFileName, FileType::output);
+
+			_readBuffer = new char[MAX_LINE_BUFFER_SIZE];
+
 
 			for (int i = 1; i < _filesDataCount; ++i)
 				_filesData[i].setData(inputFileNames[i - 1], FileType::input);
@@ -87,10 +68,12 @@ namespace fms {
 		}
 
 		~FileIO() {
+
 			for (int i = 0; i < _validFilesCout; i++)
-				_validFiles[i]->close();
-			
-			delete[] batch;
+				if ((_filesData[i].getType() != FileType::closed) && (_filesData[i].getType() != FileType::corrupt))
+					_validFiles[i]->close();
+
+			delete[] _readBuffer;
 
 			delete[] _filesData;
 		}
@@ -99,11 +82,14 @@ namespace fms {
 		FileData* _filesData;
 		std::fstream** _validFiles;
 		std::vector<FileData> _tempFilesData;
-		SortBatchElement * batch;
 		int _filesDataCount, _validFilesCout;
+		char* _readBuffer;
 
 
-		
+		void clearBuffer(char * buffer, int size = MAX_LINE_BUFFER_SIZE, char value = '\0') {
+			for (int i{}; i < size; ++i)
+				buffer[i] = value;
+		}
 
 		void initializeValidFileList() {
 			_validFiles = new std::fstream * [_filesDataCount];
@@ -113,8 +99,9 @@ namespace fms {
 
 			for (int i = 0; i < _filesDataCount; i++)
 				if (_filesData[i].getType() != FileType::corrupt) {
-					_validFiles[_validFilesCout++] = _filesData[i].getFile();
-					if (i > 0) _validFiles[_validFilesCout - 1]->open(_filesData[i].getName(), std::ios_base::in);
+					_validFilesCout++;
+					_validFiles[i] = _filesData[i].getFile();
+					if (i > 0) _validFiles[i]->open(_filesData[i].getName(), std::ios_base::in);
 				}
 
 			if (_validFilesCout < 2)

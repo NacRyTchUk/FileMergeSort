@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
 	{
 		try
 		{
-			fms::FileMergeSort fileMergeSort(inputFileNames, "out.txt", fms::SortMode::increase, 23);
+			fms::FileMergeSort fileMergeSort(inputFileNames, "out.txt", fms::SortMode::increase, fms::SortType::string, 23);
 			fileMergeSort.debug_getFileIO()->printFilesData();
 		}
 		catch (const std::exception& e)

@@ -26,12 +26,17 @@ namespace fms {
 		FileType getType() { return _fileType; }
 		std::fstream * getFile() { return &_file; }
 
+		void changeType(FileType newType) { _fileType = newType; }
 
 		void setData(std::string fileName, FileType fileType)
 		{
 			_fileName = fileName;
 			_fileType = fileType;
 			isExist();
+		}
+
+		void setData(const FileData * fd) {
+			setData(fd->_fileName,fd->_fileType);
 		}
 
 		FileData() {}
@@ -52,6 +57,9 @@ namespace fms {
 		std::fstream _file;
 
 		void isExist() {
+			if (_file.is_open() == true)
+				return;
+			
 			std::fstream fs(_fileName);
 			if (fs.is_open() == false)
 				_fileType = FileType::corrupt;
