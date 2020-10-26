@@ -1,3 +1,5 @@
+#include <sstream>
+
 #ifndef FILE_MERGE_SORT_IO
 #define FILE_MERGE_SORT_IO
 
@@ -18,11 +20,15 @@ namespace fms {
 		}
 
 		void writeInNewFile(char * buffer, int size) {
+
 			FileData fd("~" + std::to_string(_tempFilesData.size()) + ".temp", FileType::temp);
+			
+			if (fd.getType() == FileType::corrupt)
+				throw std::exception("Unable to create temp file");
+			
 			_tempFilesData.push_back(fd);
 
-			if (_tempFilesData[_tempFilesData.size() - 1].getType() == FileType::corrupt)
-				throw std::exception("Unable to create temp file");
+			
 			
 			std::fstream * tempFileStream = _tempFilesData[_tempFilesData.size() - 1].getFile();
 
@@ -32,14 +38,47 @@ namespace fms {
 
 			tempFileStream->open(_tempFilesData[_tempFilesData.size() - 1].getName(), std::ios_base::out | std::ios_base::trunc);
 			tempFileStream->write((buffer + startInd), bufferValueSize);
-			tempFileStream->close();
 		}
 
-		void writeInOutFile(char* buffer, int size) {
+		void writeInOutFile(char* buffer, int size = MAX_LINE_BUFFER_SIZE) {
 			int startInd{}, bufferValueSize{};
 			while ((startInd < size) && (buffer[startInd] == '\0')) { startInd++; };
 			while (((startInd + bufferValueSize) < size) && (buffer[startInd + bufferValueSize] != '\0')) { bufferValueSize++; };
 			_validFiles[0]->write((buffer + startInd), bufferValueSize);
+		}
+
+		void finalize(SortMode sortMode) {
+			if (sortMode != SortMode::decrease)
+				return;
+
+			std::fstream* curTempFile;
+			char* readBuffer = new char[MAX_LINE_BUFFER_SIZE];
+			for (int i = _tempFilesData.size() - 1; i >= 0 ; --i)
+			{
+				curTempFile = _tempFilesData[i].getFile();
+				curTempFile->close();
+
+				curTempFile->open(_tempFilesData[i].getName(), std::ios_base::in);
+
+				while ((curTempFile->eof() == false) )
+				{
+					clearBuffer(readBuffer);
+					curTempFile->getline(readBuffer, MAX_LINE_BUFFER_SIZE);
+					readBuffer[strlen(readBuffer)] = '\n';
+					writeInOutFile(readBuffer);
+				}
+
+				curTempFile->close();
+				std::string fileName{ _tempFilesData[i].getName() };
+				char* chFileName = new char[fileName.length() + 1];
+				for (int i = 0; i < fileName.length(); i++)
+					chFileName[i] = fileName[i];
+				chFileName[fileName.length()] = '\0';
+				std::remove(chFileName);
+				delete []chFileName;
+			}
+			delete[] readBuffer;
+
 		}
 
 		void readLineFrom(int fileInd, char * buffer, int bufferSize) {
@@ -93,7 +132,8 @@ namespace fms {
 
 		void initializeValidFileList() {
 			_validFiles = new std::fstream * [_filesDataCount];
-		
+
+
 			if (_filesData[0].getType() == FileType::corrupt)
 				throw  std::exception("Unable to create output file");
 
@@ -108,7 +148,6 @@ namespace fms {
 				throw  std::exception("No input files were found, or all input files were corrupted");
 
 			_validFiles[0]->open(_filesData[0].getName(), std::ios_base::out | std::ios_base::trunc);
-			
 		}
 	};
 }

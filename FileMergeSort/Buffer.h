@@ -19,7 +19,11 @@ namespace fms {
 		}
 
 		
+		void forceBufferClear() {
+			_fileIO->writeInNewFile(_buffer, _bufferSize);
 
+			clearBuffer();
+		}
 
 		SmartBuffer(uint32_t bufferSize, SortMode sortMode, FileIO * fileIO) { //void (*pushFunc)(char*, int)
 			_bufferSize = bufferSize;
@@ -29,8 +33,8 @@ namespace fms {
 			clearBuffer();
 		}
 
+
 		~SmartBuffer() {
-			_fileIO->writeInNewFile(_buffer, _bufferSize);
 			delete[] _buffer;
 		}
 
@@ -49,24 +53,25 @@ namespace fms {
 			_bufferIterator = (_sortMode == SortMode::decrease) * (_bufferSize - 1);
 		}
 
-		void pushBack(char* pushText, int textLength, int curLetter = -1) {
-			curLetter = (curLetter == -1) ? textLength - 1 : curLetter;
+		void pushBack(char* pushText, int textLength, int curLetter = CHAR_MIN) {
+
+			curLetter = (curLetter == CHAR_MIN) ? textLength - 1 : curLetter;
 			if (_bufferIterator - textLength + (curLetter != textLength - 1) * (curLetter) >= 0) {
 				while (curLetter >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
 			}
 			else
 			{
+
 				while (_bufferIterator >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
-				_fileIO->writeInNewFile(_buffer, _bufferSize);
-				clearBuffer();
+				forceBufferClear();
 				pushBack(pushText, textLength, curLetter);
 			}
 		}
 
 		void pushForward(char* pushText, int textLength, int curLetter = 0) {
-			if (_bufferIterator + textLength - curLetter < _bufferSize) {
+			/*if (_bufferIterator + textLength - curLetter < _bufferSize) {
 				while (curLetter < textLength)
 					_buffer[_bufferIterator++] = pushText[curLetter++];
 			}
@@ -77,7 +82,8 @@ namespace fms {
 				_fileIO->writeInNewFile(_buffer, _bufferSize);
 				clearBuffer();
 				pushForward(pushText, textLength, curLetter);
-			}
+			}*/
+			_fileIO->writeInOutFile(pushText, textLength);
 		}
 
 		void fillWhileLower(int * aNumb, int*bNumb, char * fillText, int * incNumb = 0) {

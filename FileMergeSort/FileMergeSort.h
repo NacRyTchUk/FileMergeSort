@@ -23,46 +23,49 @@ namespace fms {
 
 
 		void sort() {
-			FileData* filesData = _fileIO->getFilesData();
-			if (_countOfRereadIndex < 1)
-				return;
+			while (_countOfRereadIndex > 0) {
+				FileData* filesData = _fileIO->getFilesData();
+				if (_countOfRereadIndex < 1)
+					return;
 
-			for (int i = 0; i < _countOfRereadIndex; i++)
-				if (filesData[_indexForReread[i] + 1].getType() == FileType::input)
-				{
-					clearBuffer(_valueBuffer);
-					_fileIO->readLineFrom(_indexForReread[i] + 1, _valueBuffer, MAX_LINE_BUFFER_SIZE);
-					if (isBigger(_currentBottomValues[_indexForReread[i]], _valueBuffer, _sortType))
-						throw std::exception("Incorrectly sorted file");
-					clearBuffer(_currentBottomValues[_indexForReread[i]]);
-					strcat_s(_currentBottomValues[_indexForReread[i]], MAX_LINE_BUFFER_SIZE, _valueBuffer);
-				}
-
-			
-			_countOfRereadIndex = 0;
-			int minInd{-1};
-			while ((filesData[++minInd + 1].getType() != FileType::input)&&(minInd < _inputFilesCount)) {}
-
-			for (int i = minInd; i < _inputFilesCount; i++)
-			{
-				if (filesData[i + 1].getType() == FileType::input)
-				{
-					if (isBigger(_currentBottomValues[minInd], _currentBottomValues[i], _sortType))
+				for (int i = 0; i < _countOfRereadIndex; i++)
+					if (filesData[_indexForReread[i] + 1].getType() == FileType::input)
 					{
-						minInd = i;
-						_countOfRereadIndex = 0;
+						clearBuffer(_valueBuffer);
+						_fileIO->readLineFrom(_indexForReread[i] + 1, _valueBuffer, MAX_LINE_BUFFER_SIZE);
+						if (isBigger(_currentBottomValues[_indexForReread[i]], _valueBuffer, _sortType))
+							throw std::exception("Incorrectly sorted file");
+						clearBuffer(_currentBottomValues[_indexForReread[i]]);
+						strcat_s(_currentBottomValues[_indexForReread[i]], MAX_LINE_BUFFER_SIZE, _valueBuffer);
 					}
-					if (strcmp(_currentBottomValues[minInd], _currentBottomValues[i]) == 0)
-						_indexForReread[_countOfRereadIndex++] = i;
+
+
+				_countOfRereadIndex = 0;
+				int minInd{ -1 };
+				while ((filesData[++minInd + 1].getType() != FileType::input) && (minInd < _inputFilesCount)) {}
+
+				for (int i = minInd; i < _inputFilesCount; i++)
+				{
+					if (filesData[i + 1].getType() == FileType::input)
+					{
+						if (isBigger(_currentBottomValues[minInd], _currentBottomValues[i], _sortType))
+						{
+							minInd = i;
+							_countOfRereadIndex = 0;
+						}
+						if (strcmp(_currentBottomValues[minInd], _currentBottomValues[i]) == 0)
+							_indexForReread[_countOfRereadIndex++] = i;
+					}
+				}
+
+				char newLine = '\n';
+				for (int i = 0; i < _countOfRereadIndex; i++)
+				{
+
+					_smartBuffer->push(_currentBottomValues[minInd], strlen(_currentBottomValues[minInd]));
+					_smartBuffer->push(&newLine, 1);
 				}
 			}
-
-			for (int i = 0; i < _countOfRereadIndex; i++)
-			{
-				std::cout << _currentBottomValues[minInd] << std::endl;
-			}
-			std::cout  << std::endl;
-
 		}
 
 		FileMergeSort(std::vector<std::string> inputFileNames, std::string outputFileName, SortMode sortMode, SortType sortType, uint32_t bufferByteSize) {
@@ -83,28 +86,20 @@ namespace fms {
 				_indexForReread[i] = i;
 			_countOfRereadIndex = _inputFilesCount;
 
+
 			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
-			sort();
+
+			_smartBuffer->forceBufferClear();
+
+			_fileIO->finalize(_sortMode);
 		}
 
 		~FileMergeSort() {
 			delete _smartBuffer;
+			
+			
 			delete _fileIO;
+
 
 			for (int i = 0; i < _inputFilesCount; i++)
 				delete [] _currentBottomValues[i];
