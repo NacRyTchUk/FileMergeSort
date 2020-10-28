@@ -34,7 +34,13 @@ namespace fms {
 						clearBuffer(_valueBuffer);
 						_fileIO->readLineFrom(_indexForReread[i] + 1, _valueBuffer, MAX_LINE_BUFFER_SIZE);
 						if (isBigger(_currentBottomValues[_indexForReread[i]], _valueBuffer, _sortType))
-							throw std::exception("Incorrectly sorted file");
+							//throw std::exception("Incorrectly sorted file");
+						{
+							filesData[_indexForReread[i] + 1].changeType(FileType::corrupt);
+							std::cerr << "A non-critical error was detected: the file \"" << filesData[_indexForReread[i] + 1].getName() <<
+								"\" was sorted Incorrectly. Sorting will continue with data loss." << std::endl;
+							continue;
+						}
 						clearBuffer(_currentBottomValues[_indexForReread[i]]);
 						strcat_s(_currentBottomValues[_indexForReread[i]], MAX_LINE_BUFFER_SIZE, _valueBuffer);
 					}

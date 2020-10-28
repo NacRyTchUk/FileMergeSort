@@ -27,7 +27,6 @@ namespace fms {
 				throw std::exception("Unable to create temp file");
 			
 			_tempFilesData.push_back(fd);
-
 			
 			
 			std::fstream * tempFileStream = _tempFilesData[_tempFilesData.size() - 1].getFile();
@@ -64,7 +63,7 @@ namespace fms {
 				{
 					clearBuffer(readBuffer);
 					curTempFile->getline(readBuffer, MAX_LINE_BUFFER_SIZE);
-					readBuffer[strlen(readBuffer)] = '\n';
+					if ((strlen(readBuffer) > 0)) readBuffer[strlen(readBuffer)] = '\n';
 					writeInOutFile(readBuffer);
 				}
 

@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
 		}
 		catch (const std::exception& e)
 		{
-			std::cerr << e.what();
+			std::cerr << "A critical error was detected while running the program: \""<< e.what() <<"\"." << std::endl;
 		}
 
 	}
