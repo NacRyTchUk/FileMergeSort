@@ -150,6 +150,7 @@
     <ClInclude Include="FileMergeSort.h" />
     <ClInclude Include="FileMergeSortIO.h" />
     <ClInclude Include="MergeSortFileData.h" />
+    <ClInclude Include="SortParameters.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

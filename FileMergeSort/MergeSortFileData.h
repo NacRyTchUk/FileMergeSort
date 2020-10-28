@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "SortParameters.h"
+
 
 #ifndef MERGE_SORT_FILE_DATA
 #define MERGE_SORT_FILE_DATA
@@ -8,16 +10,6 @@
 
 
 namespace fms {
-
-	enum class FileType
-	{
-		input, output, temp, corrupt, closed
-	};
-
-	enum class SortMode {
-		decrease = -1, increase = 1
-	};
-	
 
 	class FileData
 	{

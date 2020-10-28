@@ -1,6 +1,22 @@
 #include <iostream>
+#include "SortParameters.h"
+
 
 
 namespace fms {
 	
+
+	bool isFileHasRightFormat(const char* fileName, std::string format) {
+		int iter{ (int)strlen(fileName) };
+		for (int i = format.size() - 1; i >= 0; i--)
+			if (fileName[--iter] != format[i])
+				return false;
+		return true;
+	}
+
+	bool isBigger(char* a, char* b, SortType sortType) {
+		int lenA = strlen(a), lenB = strlen(b);
+		if (lenB == 0) return false;
+		return (lenA == lenB) || (sortType == SortType::string) ? (strcmp(a, b) > 0) : (lenA > lenB);
+	}
 }

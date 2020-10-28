@@ -1,21 +1,19 @@
 #include "MergeSortFileData.h"
 #include "FileMergeSortIO.h"
 #include "Buffer.h"
+#include "SortParameters.h"
+
 
 #ifndef FILE_MERGE_SORT
 #define FILE_MERGE_SORT
 
 namespace fms {
-	enum class SortType
-	{
-		integer, string
-	};
 
-	bool isBigger(char* a, char* b, SortType sortType) {
-		int lenA = strlen(a), lenB = strlen(b);
-		if (lenB == 0) return false;
-		return (lenA == lenB) || (sortType == SortType::string) ? (strcmp(a, b) > 0) : (lenA > lenB);
-	}
+
+	bool isBigger(char*, char*, SortType);
+	bool isFileHasRightFormat(const char*, std::string);
+	
+	
 
 	class FileMergeSort {
 	public:
