@@ -33,7 +33,8 @@ namespace fms {
 
 			int startInd{}, bufferValueSize{};
 			while ((startInd < size) && (buffer[startInd] == '\0')) { startInd++; };
-			while (((startInd + bufferValueSize) < size) && (buffer[startInd + bufferValueSize] != '\0')) { bufferValueSize++; };
+			while (((startInd + bufferValueSize) < size) && (buffer[startInd + bufferValueSize] != '\0'))
+			{ bufferValueSize++; };
 
 			tempFileStream->open(_tempFilesData[_tempFilesData.size() - 1].getName(), std::ios_base::out | std::ios_base::trunc);
 			tempFileStream->write((buffer + startInd), bufferValueSize);

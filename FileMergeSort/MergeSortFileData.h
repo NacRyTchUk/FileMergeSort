@@ -35,7 +35,8 @@ namespace fms {
 
 		FileData(const FileData& fd)
 		{
-			setData(fd._fileName, fd._fileType);
+			_fileName = fd._fileName;
+			_fileType = fd._fileType;
 		}
 
 		FileData(std::string fileName, FileType fileType)

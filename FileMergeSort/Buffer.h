@@ -25,11 +25,11 @@ namespace fms {
 			clearBuffer();
 		}
 
-		SmartBuffer(uint32_t bufferSize, SortMode sortMode, FileIO * fileIO) { //void (*pushFunc)(char*, int)
+		SmartBuffer(uint32_t bufferSize, SortMode sortMode, FileIO * fileIO) { 
 			_bufferSize = bufferSize;
 			_buffer = new char[bufferSize + 1]{};
 			_sortMode = sortMode;
-			_fileIO = fileIO; //_pushFunc = pushFunc;
+			_fileIO = fileIO; 
 			clearBuffer();
 		}
 
@@ -41,28 +41,25 @@ namespace fms {
 		operator char* () { return _buffer; }
 	private:
 		char* _buffer;
-		int32_t _bufferSize; 
-		int64_t _bufferIterator{};
-		FileIO* _fileIO; //void (*_pushFunc)(char*, int);
+		int64_t _bufferSize, _bufferIterator{};
+		FileIO* _fileIO; 
 		SortMode _sortMode;
 
 
 		void clearBuffer() {
 			for (int i = 0; i < _bufferSize; i++)
 				_buffer[i] = '\0';
-			_bufferIterator = (_sortMode == SortMode::decrease) * (_bufferSize - 1);
+			_bufferIterator = (int)(_sortMode == SortMode::decrease) * (_bufferSize - 2);
 		}
 
 		void pushBack(char* pushText, int textLength, int curLetter = CHAR_MIN) {
-
 			curLetter = (curLetter == CHAR_MIN) ? textLength - 1 : curLetter;
-			if (_bufferIterator - textLength + (curLetter != textLength - 1) * (curLetter) >= 0) {
+			if (_bufferIterator - textLength + (int)(curLetter != textLength - 1) * (curLetter) >= 0) {
 				while (curLetter >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
 			}
 			else
 			{
-
 				while (_bufferIterator >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
 				forceBufferClear();
@@ -70,19 +67,7 @@ namespace fms {
 			}
 		}
 
-		void pushForward(char* pushText, int textLength, int curLetter = 0) {
-			/*if (_bufferIterator + textLength - curLetter < _bufferSize) {
-				while (curLetter < textLength)
-					_buffer[_bufferIterator++] = pushText[curLetter++];
-			}
-			else
-			{
-				while (_bufferIterator < _bufferSize)
-					_buffer[_bufferIterator++] = pushText[curLetter++];
-				_fileIO->writeInNewFile(_buffer, _bufferSize);
-				clearBuffer();
-				pushForward(pushText, textLength, curLetter);
-			}*/
+		void pushForward(char* pushText, int textLength) {
 			_fileIO->writeInOutFile(pushText, textLength);
 		}
 

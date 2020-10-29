@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 			inputFileNames.erase(inputFileNames.begin());
 
 
-			fms::FileMergeSort fileMergeSort(inputFileNames, outputFileName, sortMode, sortType, 23);
+			fms::FileMergeSort fileMergeSort(inputFileNames, outputFileName, sortMode, sortType, 1*1000*1000);
 			fileMergeSort.debug_getFileIO()->printFilesData();
 		}
 		catch (const std::exception& e)
