@@ -38,6 +38,7 @@ namespace fms {
 
 			tempFileStream->open(_tempFilesData[_tempFilesData.size() - 1].getName(), std::ios_base::out | std::ios_base::trunc);
 			tempFileStream->write((buffer + startInd), bufferValueSize);
+			tempFileStream->close();
 		}
 
 		void writeInOutFile(char* buffer, int size = MAX_LINE_BUFFER_SIZE) {
@@ -56,13 +57,12 @@ namespace fms {
 			for (int i = _tempFilesData.size() - 1; i >= 0 ; --i)
 			{
 				curTempFile = _tempFilesData[i].getFile();
-				curTempFile->close();
 
 				curTempFile->open(_tempFilesData[i].getName(), std::ios_base::in);
 
 				while ((curTempFile->eof() == false) )
 				{
-					clearBuffer(readBuffer);
+					_clearBuffer(readBuffer);
 					curTempFile->getline(readBuffer, MAX_LINE_BUFFER_SIZE);
 					if ((strlen(readBuffer) > 0)) readBuffer[strlen(readBuffer)] = '\n';
 					writeInOutFile(readBuffer);
@@ -103,7 +103,7 @@ namespace fms {
 			for (int i = 1; i < _filesDataCount; ++i)
 				_filesData[i].setData(inputFileNames[i - 1], FileType::input);
 			
-			initializeValidFileList();
+			_initializeValidFileList();
 		}
 
 		~FileIO() {
@@ -125,12 +125,12 @@ namespace fms {
 		char* _readBuffer;
 
 
-		void clearBuffer(char * buffer, int size = MAX_LINE_BUFFER_SIZE, char value = '\0') {
+		void _clearBuffer(char * buffer, int size = MAX_LINE_BUFFER_SIZE, char value = '\0') {
 			for (int i{}; i < size; ++i)
 				buffer[i] = value;
 		}
 
-		void initializeValidFileList() {
+		void _initializeValidFileList() {
 			_validFiles = new std::fstream * [_filesDataCount];
 
 

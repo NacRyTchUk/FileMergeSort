@@ -2,4 +2,5 @@
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSortIO.h(74,23): warning C4018: '<': signed/unsigned mismatch
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\Buffer.h(12,26): warning C4244: 'return': conversion from 'int64_t' to 'int', possible loss of data
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\Buffer.h(23,37): warning C4244: 'argument': conversion from 'int64_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\main.cpp(52,89): warning C4244: 'argument': conversion from 'int64_t' to 'uint32_t', possible loss of data
   FileMergeSort.vcxproj -> X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\Debug\FileMergeSort.exe

@@ -13,16 +13,16 @@ namespace fms {
 
 		void push(char* pushText, int textLength) {
 			if (_sortMode == SortMode::increase)
-				pushForward(pushText, textLength);
+				_pushForward(pushText, textLength);
 			else
-				pushBack(pushText, textLength);
+				_pushBack(pushText, textLength);
 		}
 
 		
 		void forceBufferClear() {
 			_fileIO->writeInNewFile(_buffer, _bufferSize);
 
-			clearBuffer();
+			_clearBuffer();
 		}
 
 		SmartBuffer(uint32_t bufferSize, SortMode sortMode, FileIO * fileIO) { 
@@ -30,7 +30,7 @@ namespace fms {
 			_buffer = new char[bufferSize + 1]{};
 			_sortMode = sortMode;
 			_fileIO = fileIO; 
-			clearBuffer();
+			_clearBuffer();
 		}
 
 
@@ -46,13 +46,13 @@ namespace fms {
 		SortMode _sortMode;
 
 
-		void clearBuffer() {
+		void _clearBuffer() {
 			for (int i = 0; i < _bufferSize; i++)
 				_buffer[i] = '\0';
 			_bufferIterator = (int)(_sortMode == SortMode::decrease) * (_bufferSize - 2);
 		}
 
-		void pushBack(char* pushText, int textLength, int curLetter = CHAR_MIN) {
+		void _pushBack(char* pushText, int textLength, int curLetter = CHAR_MIN) {
 			curLetter = (curLetter == CHAR_MIN) ? textLength - 1 : curLetter;
 			if (_bufferIterator - textLength + (int)(curLetter != textLength - 1) * (curLetter) >= 0) {
 				while (curLetter >= 0)
@@ -63,15 +63,15 @@ namespace fms {
 				while (_bufferIterator >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
 				forceBufferClear();
-				pushBack(pushText, textLength, curLetter);
+				_pushBack(pushText, textLength, curLetter);
 			}
 		}
 
-		void pushForward(char* pushText, int textLength) {
+		void _pushForward(char* pushText, int textLength) {
 			_fileIO->writeInOutFile(pushText, textLength);
 		}
 
-		void fillWhileLower(int * aNumb, int*bNumb, char * fillText, int * incNumb = 0) {
+		void _fillWhileLower(int * aNumb, int*bNumb, char * fillText, int * incNumb = 0) {
 			while (*aNumb < *bNumb)
 				_buffer[_bufferIterator+=(int)_sortMode] = fillText[(*incNumb)++];
 		}

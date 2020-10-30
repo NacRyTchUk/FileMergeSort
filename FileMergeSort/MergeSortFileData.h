@@ -53,20 +53,10 @@ namespace fms {
 			if (_file.is_open() == true)
 				return;
 			
-			if (_fileType == FileType::input)
-			{
-				std::fstream fs(_fileName);
-				if (fs.is_open() == false)
-					_fileType = FileType::corrupt;
-				fs.close();
-			}
-			else
-			{
-				std::ofstream of(_fileName);
-				if (of.is_open() == false)
-					_fileType = FileType::corrupt;
-				of.close();
-			}
+			std::fstream fs(_fileName, (_fileType != FileType::input) * std::ios::out + (_fileType == FileType::input));
+			if (fs.is_open() == false)
+				_fileType = FileType::corrupt;
+			fs.close();
 		}
 	};
 }

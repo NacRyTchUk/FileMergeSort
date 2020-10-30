@@ -4,4 +4,8 @@
     <LocalDebuggerCommandArguments>-d -i output.txt inBigInt1.txt in2.txt inBigInt2.txt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerCommandArguments>-d -i  output.txt inBigInt1.txt -b  in2.txt 10 inBigInt2.txt</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>

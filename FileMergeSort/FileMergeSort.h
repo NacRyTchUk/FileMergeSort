@@ -17,10 +17,13 @@ namespace fms {
 
 	class FileMergeSort {
 	public:
+		
+
 		FileIO* debug_getFileIO() { return _fileIO; }
 
 
 		void sort() {
+			char symbolOfNewLine = '\n';
 			while (_countOfRereadIndex > 0) {
 				FileData* filesData = _fileIO->getFilesData();
 				if (_countOfRereadIndex < 1)
@@ -29,7 +32,7 @@ namespace fms {
 				for (int i = 0; i < _countOfRereadIndex; i++)
 					if (filesData[_indexForReread[i] + 1].getType() == FileType::input)
 					{
-						clearBuffer(_valueBuffer);
+						_clearBuffer(_valueBuffer);
 						_fileIO->readLineFrom(_indexForReread[i] + 1, _valueBuffer, MAX_LINE_BUFFER_SIZE);
 						if (isBigger(_currentBottomValues[_indexForReread[i]], _valueBuffer, _sortType))
 							//throw std::exception("Incorrectly sorted file");
@@ -39,7 +42,7 @@ namespace fms {
 								"\" was sorted Incorrectly. Sorting will continue with data loss." << std::endl;
 							continue;
 						}
-						clearBuffer(_currentBottomValues[_indexForReread[i]]);
+						_clearBuffer(_currentBottomValues[_indexForReread[i]]);
 						strcat_s(_currentBottomValues[_indexForReread[i]], MAX_LINE_BUFFER_SIZE, _valueBuffer);
 					}
 
@@ -62,14 +65,18 @@ namespace fms {
 					}
 				}
 
-				char newLine = '\n';
+				
 				for (int i = 0; i < _countOfRereadIndex; i++)
 				{
 
 					_smartBuffer->push(_currentBottomValues[minInd], strlen(_currentBottomValues[minInd]));
-					_smartBuffer->push(&newLine, 1);
+					_smartBuffer->push(&symbolOfNewLine, 1);
 				}
 			}
+
+			_smartBuffer->forceBufferClear();
+
+			_fileIO->finalize(_sortMode);
 		}
 
 		FileMergeSort(std::vector<std::string> inputFileNames, std::string outputFileName, SortMode sortMode, SortType sortType, uint32_t bufferByteSize) {
@@ -91,11 +98,6 @@ namespace fms {
 			_countOfRereadIndex = _inputFilesCount;
 
 
-			sort();
-
-			_smartBuffer->forceBufferClear();
-
-			_fileIO->finalize(_sortMode);
 		}
 
 		~FileMergeSort() {
@@ -125,7 +127,7 @@ namespace fms {
 		int  _countOfRereadIndex, _inputFilesCount;
 
 
-		void clearBuffer(char* buffer, int size = MAX_LINE_BUFFER_SIZE, char value = '\0') {
+		void _clearBuffer(char* buffer, int size = MAX_LINE_BUFFER_SIZE, char value = '\0') {
 			for (int i{}; i < size; ++i)
 				buffer[i] = value;
 		}

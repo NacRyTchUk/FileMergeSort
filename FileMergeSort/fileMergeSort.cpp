@@ -19,4 +19,15 @@ namespace fms {
 		if (lenB == 0) return false;
 		return (lenA == lenB) || (sortType == SortType::string) ? (strcmp(a, b) > 0) : (lenA > lenB);
 	}
+
+	int stringToSizeTryParse(char * str) {
+		try
+		{
+			return std::atoi(str);
+		}
+		catch (const std::exception&)
+		{
+			return -1;
+		}
+	}
 }

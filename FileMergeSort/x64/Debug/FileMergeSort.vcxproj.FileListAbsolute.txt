@@ -1,0 +1,2 @@
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\x64\Debug\FileMergeSort.exe
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\x64\Debug\FileMergeSort.pdb
