@@ -14,10 +14,7 @@ int main(int argc, char* argv[]) {
 		{
 			std::set<std::string> param;
 			for (int i = 1; i < argc; i++)
-			{
 				param.insert(argv[i]);
-				std::cout << argv[i] << std::endl;
-			}
 
 			if (param.size() < 3)
 				throw std::exception("Not all required parameters are declared");
@@ -27,7 +24,7 @@ int main(int argc, char* argv[]) {
 			if ((param.find("-s") == param.find("-i")))
 				throw std::exception("Required data type parameter is not declared (-s / -i).");
 
-			fms::SortType sortType{ (param.find("-s") != param.end()) ? fms::SortType::string : fms::SortType::integer };
+			fms::SortType sortType{ (param.find("-i") != param.end()) ? fms::SortType::integer : fms::SortType::string };
 
 			std::vector<std::string> inputFileNames;
 
@@ -39,7 +36,11 @@ int main(int argc, char* argv[]) {
 					inputFileNames.push_back(argv[i]);
 
 				if ((strcmp(argv[i - 1], "-b") == 0) && (tempSize = std::atoi(argv[i])))
-					smartBufferSize = tempSize*1000*1000;
+					if (tempSize > 0 && tempSize <= 1000)
+						smartBufferSize = (int64_t)tempSize * 1000 * 1000;
+					else 
+						std::cerr << "The buffer size is set incorrectly (" << tempSize << "mb)." << std::endl;
+
 			}
 
 			if (inputFileNames.size() < 2)
@@ -48,6 +49,10 @@ int main(int argc, char* argv[]) {
 			std::string outputFileName{ inputFileNames[0] };
 			inputFileNames.erase(inputFileNames.begin());
 
+			std::cout << "sortmode: " << (((int)sortMode == -1) ? "decrease" : "increase") << std::endl;
+			std::cout << "sorttype: " << (((int)sortType == 0) ? "integer" : "string") << std::endl;
+			std::cout << "output file: " << outputFileName << std::endl;
+			std::cout << "buffer size (Bytes): " << smartBufferSize<< std::endl << std::endl;
 
 			fms::FileMergeSort fileMergeSort(inputFileNames, outputFileName, sortMode, sortType, smartBufferSize);
 			fileMergeSort.sort();

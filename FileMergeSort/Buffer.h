@@ -25,7 +25,7 @@ namespace fms {
 			_clearBuffer();
 		}
 
-		SmartBuffer(uint32_t bufferSize, SortMode sortMode, FileIO * fileIO) { 
+		SmartBuffer(uint64_t bufferSize, SortMode sortMode, FileIO * fileIO) { 
 			_bufferSize = bufferSize;
 			_buffer = new char[bufferSize + 1]{};
 			_sortMode = sortMode;

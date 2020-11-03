@@ -1,14 +1,9 @@
-﻿  FileMergeSort.cpp
-X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.cpp(11,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.cpp(18,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.cpp(18,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  main.cpp
+﻿  main.cpp
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSortIO.h(57,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSortIO.h(94,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\Buffer.h(12,26): warning C4244: 'return': conversion from 'int64_t' to 'int', possible loss of data
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\Buffer.h(23,37): warning C4244: 'argument': conversion from 'int64_t' to 'int', possible loss of data
-X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.h(72,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.h(91,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\main.cpp(52,89): warning C4244: 'argument': conversion from 'int64_t' to 'uint32_t', possible loss of data
-  Generating Code...
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.h(73,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.h(92,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\main.cpp(55,89): warning C4244: 'argument': conversion from 'int64_t' to 'uint32_t', possible loss of data
   FileMergeSort.vcxproj -> X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\x64\Debug\FileMergeSort.exe

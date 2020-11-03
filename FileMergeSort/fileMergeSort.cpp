@@ -30,4 +30,8 @@ namespace fms {
 			return -1;
 		}
 	}
+
+	namespace FileMergeSort {
+
+	}
 }

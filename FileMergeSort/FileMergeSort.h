@@ -22,6 +22,7 @@ namespace fms {
 		FileIO* debug_getFileIO() { return _fileIO; }
 
 
+
 		void sort() {
 			char symbolOfNewLine = '\n';
 			while (_countOfRereadIndex > 0) {
@@ -79,7 +80,7 @@ namespace fms {
 			_fileIO->finalize(_sortMode);
 		}
 
-		FileMergeSort(std::vector<std::string> inputFileNames, std::string outputFileName, SortMode sortMode, SortType sortType, uint32_t bufferByteSize) {
+		FileMergeSort(std::vector<std::string> inputFileNames, std::string outputFileName, SortMode sortMode, SortType sortType, uint64_t bufferByteSize) {
 			_sortMode = sortMode;
 			_sortType = sortType;
 			
