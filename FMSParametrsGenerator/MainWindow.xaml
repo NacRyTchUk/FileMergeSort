@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         
         Title="FMS Parameters genetator" ResizeMode="NoResize" Height="510" Width="410">
-        
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="367*"/>
@@ -30,10 +30,11 @@
         </ComboBox>
         <Slider x:Name="BufferSizeSlider" HorizontalAlignment="Left" Margin="72,99,0,0" VerticalAlignment="Top" Width="226" 
                 Minimum="1" Maximum="1000" Value="50" ValueChanged="BufferValueChanged" SmallChange="1" LargeChange="10" TickFrequency="10"/>
-        <TextBox x:Name="OutputTextBox" HorizontalAlignment="Left" Margin="33,378,0,0" Text="output.txt" TextWrapping="NoWrap" VerticalAlignment="Top" Width="325" SelectionChanged="OuputTextChanged" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="InputTextBox"  AcceptsReturn="True" HorizontalAlignment="Left" Margin="33,185,0,0" Text="in1.txt" TextWrapping="NoWrap" VerticalAlignment="Top" Width="325" Height="162" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="OutputTextBox" HorizontalAlignment="Left" Margin="33,378,0,0" Text="output.txt" TextWrapping="NoWrap" VerticalAlignment="Top" Width="325" TextChanged="OuputTextChanged" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="InputTextBox"  AcceptsReturn="True" HorizontalAlignment="Left" Margin="33,185,0,0" Text="in1.txt" TextWrapping="NoWrap" VerticalAlignment="Top" Width="325" Height="162" TextChanged="InputTextChanged" Grid.ColumnSpan="2"/>
         <TextBox x:Name="OutputParametersTextBox" HorizontalAlignment="Left" Margin="33,436,0,0" Text="FileMergeSort.exe -a -i output.txt in1.txt" TextWrapping="NoWrap" IsReadOnly="True" VerticalAlignment="Top" Width="325" Grid.ColumnSpan="2"/>
         <Label Content="Generated parameters" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="116,410,0,0" VerticalAlignment="Top" Width="138"/>
+        <CheckBox x:Name="AutoPostfixAddCheckBox" Content="Auto add &quot;.txt&quot;" HorizontalAlignment="Left" Margin="256,160,0,0" Click="CheckedChanded" VerticalAlignment="Top"/>
 
 
     </Grid>

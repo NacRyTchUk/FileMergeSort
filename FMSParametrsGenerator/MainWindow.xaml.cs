@@ -29,8 +29,6 @@ namespace FMSParametrsGenerator
         {
             if (isInit == false)
                 return;
-
-
             try
             {
                 OutputParametersTextBox.Text = "FileMergeSort.exe ";
@@ -38,8 +36,21 @@ namespace FMSParametrsGenerator
                 OutputParametersTextBox.Text += (SortTypeComboBox.SelectedIndex == 0) ? "-i " : "-s ";
                 OutputParametersTextBox.Text += (Math.Round(BufferSizeSlider.Value) != 50) ? "-b " + Math.Round(BufferSizeSlider.Value).ToString() + " " : "";
                 OutputParametersTextBox.Text += OutputTextBox.Text + " ";
-                OutputParametersTextBox.Text += InputTextBox.Text.Replace('\n', ' ').Replace('\r',' ');
-
+                if (AutoPostfixAddCheckBox.IsChecked == false)
+                {
+                    OutputParametersTextBox.Text += InputTextBox.Text.Replace(" ", "").Replace("\n", "").Replace("\r"," ");
+                } else
+                {
+                  var inputNames =  InputTextBox.Text.Replace(" ", "").Replace('\n', ' ').Split('\r');
+                    foreach (var line in inputNames)
+                    {
+                        if (line.Length < 2) continue;
+                        OutputParametersTextBox.Text += line;
+                        if ((line.Length < 4) || (line.Substring(line.Length - 4) != ".txt"))
+                            OutputParametersTextBox.Text += ".txt";
+                        OutputParametersTextBox.Text += " ";
+                    }
+                }
             }
             catch (Exception)
             {
@@ -62,6 +73,18 @@ namespace FMSParametrsGenerator
         }
 
         private void OuputTextChanged(object sender, RoutedEventArgs e)
+        {
+            restructParameters();
+        }
+
+      
+
+        private void InputTextChanged(object sender, TextChangedEventArgs e)
+        {
+            restructParameters();
+        }
+
+        private void CheckedChanded(object sender, RoutedEventArgs e)
         {
             restructParameters();
         }
