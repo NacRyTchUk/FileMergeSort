@@ -20,21 +20,21 @@
         <Label Content="Output file name" HorizontalAlignment="Left" Margin="34,352,0,0" VerticalAlignment="Top" Width="122"/>
         <Label Content="Input file names" HorizontalAlignment="Left" Margin="33,154,0,0" VerticalAlignment="Top" Width="121"/>
         <Label Content="Buffer size" HorizontalAlignment="Left" Margin="129,68,0,0" VerticalAlignment="Top" Width="84"/>
-        <ComboBox x:Name="SortModeComboBox" HorizontalAlignment="Left" Margin="33,41,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="SortModeSelectChanged">
+        <ComboBox x:Name="SortModeComboBox" HorizontalAlignment="Left" Margin="33,41,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="restructParameters">
             <ComboBoxItem IsSelected="True">Increase</ComboBoxItem>
             <ComboBoxItem>Decrease</ComboBoxItem>
         </ComboBox>
-        <ComboBox x:Name="SortTypeComboBox" HorizontalAlignment="Left" Margin="238,41,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="SortTypeSelectChanged" Grid.ColumnSpan="2">
+        <ComboBox x:Name="SortTypeComboBox" HorizontalAlignment="Left" Margin="238,41,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="restructParameters" Grid.ColumnSpan="2">
             <ComboBoxItem IsSelected="True">Integer</ComboBoxItem>
             <ComboBoxItem>String</ComboBoxItem>
         </ComboBox>
         <Slider x:Name="BufferSizeSlider" HorizontalAlignment="Left" Margin="72,99,0,0" VerticalAlignment="Top" Width="226" 
-                Minimum="1" Maximum="1000" Value="50" ValueChanged="BufferValueChanged" SmallChange="1" LargeChange="10" TickFrequency="10"/>
-        <TextBox x:Name="OutputTextBox" HorizontalAlignment="Left" Margin="33,378,0,0" Text="output.txt" TextWrapping="NoWrap" VerticalAlignment="Top" Width="325" TextChanged="OuputTextChanged" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="InputTextBox"  AcceptsReturn="True" HorizontalAlignment="Left" Margin="33,185,0,0" Text="in1.txt" TextWrapping="NoWrap" VerticalAlignment="Top" Width="325" Height="162" TextChanged="InputTextChanged" Grid.ColumnSpan="2"/>
+                Minimum="1" Maximum="1000" Value="50" ValueChanged="restructParameters" SmallChange="1" LargeChange="10" TickFrequency="10"/>
+        <TextBox x:Name="OutputTextBox" HorizontalAlignment="Left" Margin="33,378,0,0" Text="output.txt" TextWrapping="NoWrap" VerticalAlignment="Top" Width="325" TextChanged="restructParameters" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="InputTextBox"  AcceptsReturn="True" HorizontalAlignment="Left" Margin="33,185,0,0" Text="in1.txt" TextWrapping="NoWrap" VerticalAlignment="Top" Width="325" Height="162" TextChanged="restructParameters" Grid.ColumnSpan="2"/>
         <TextBox x:Name="OutputParametersTextBox" HorizontalAlignment="Left" Margin="33,436,0,0" Text="-a -i output.txt in1.txt" TextWrapping="NoWrap" IsReadOnly="True" VerticalAlignment="Top" Width="325" Grid.ColumnSpan="2"/>
         <Label Content="Generated parameters" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="116,410,0,0" VerticalAlignment="Top" Width="138"/>
-        <CheckBox x:Name="AutoPostfixAddCheckBox" Content="Auto add &quot;.txt&quot;" HorizontalAlignment="Left" Margin="256,160,0,0" Click="CheckedChanded" VerticalAlignment="Top"/>
+        <CheckBox x:Name="AutoPostfixAddCheckBox" Content="Auto add &quot;.txt&quot;" HorizontalAlignment="Left" Margin="256,160,0,0" Click="restructParameters" VerticalAlignment="Top"/>
 
 
     </Grid>

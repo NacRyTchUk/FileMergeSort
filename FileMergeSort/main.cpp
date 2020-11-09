@@ -50,9 +50,10 @@ int main(int argc, char* argv[]) {
 			std::cout << "buffer size (Bytes): " << smartBufferSize<< std::endl << std::endl;
 
 			fms::FileMergeSort fileMergeSort(inputFileNames, outputFileName, sortMode, sortType, smartBufferSize);
-			fileMergeSort.sort();
 
-			fileMergeSort.debug_getFileIO()->printFilesData();
+			fileMergeSort.sort();
+			
+			std::cout << std::endl << "Sorting is complete, check the output file" << std::endl;
 		}
 		catch (const std::exception& e)
 		{

@@ -8,26 +8,20 @@ namespace fms {
 
 	class FileIO {
 	public:
-		
 		FileData* getFilesData() { return _filesData; }
-		
 
 		void printFilesData() {
 			for (int i = 0; i < _filesDataCount; i++)
-			{
 				std::cout << "Files name: " << _filesData[i].getName() << "; File type: " << (int)_filesData[i].getType() << std::endl;
-			}
 		}
 
 		void writeInNewFile(char * buffer, int size) {
-
 			FileData fd("~" + std::to_string(_tempFilesData.size()) + ".temp", FileType::temp);
 			
 			if (fd.getType() == FileType::corrupt)
 				throw std::exception("Unable to create temp file");
 			
 			_tempFilesData.push_back(fd);
-			
 			
 			std::fstream * tempFileStream = _tempFilesData[_tempFilesData.size() - 1].getFile();
 
@@ -78,7 +72,6 @@ namespace fms {
 				delete []chFileName;
 			}
 			delete[] readBuffer;
-
 		}
 
 		void readLineFrom(int fileInd, char * buffer, int bufferSize) {
@@ -90,7 +83,6 @@ namespace fms {
 		
 
 		FileIO(std::vector<std::string> inputFileNames, std::string outputFileName) {
-
 			_filesDataCount = inputFileNames.size() + 1;
 
 			_filesData = new FileData[_filesDataCount]{};
@@ -99,7 +91,6 @@ namespace fms {
 
 			_readBuffer = new char[MAX_LINE_BUFFER_SIZE];
 
-
 			for (int i = 1; i < _filesDataCount; ++i)
 				_filesData[i].setData(inputFileNames[i - 1], FileType::input);
 			
@@ -107,13 +98,11 @@ namespace fms {
 		}
 
 		~FileIO() {
-
 			for (int i = 0; i < _validFilesCout; i++)
 				if ((_filesData[i].getType() != FileType::closed) && (_filesData[i].getType() != FileType::corrupt))
 					_validFiles[i]->close();
 
 			delete[] _readBuffer;
-
 			delete[] _filesData;
 		}
 
@@ -124,7 +113,6 @@ namespace fms {
 		int _filesDataCount, _validFilesCout;
 		char* _readBuffer;
 
-
 		void _clearBuffer(char * buffer, int size = MAX_LINE_BUFFER_SIZE, char value = '\0') {
 			for (int i{}; i < size; ++i)
 				buffer[i] = value;
@@ -132,7 +120,6 @@ namespace fms {
 
 		void _initializeValidFileList() {
 			_validFiles = new std::fstream * [_filesDataCount];
-
 
 			if (_filesData[0].getType() == FileType::corrupt)
 				throw  std::exception("Unable to create output file");

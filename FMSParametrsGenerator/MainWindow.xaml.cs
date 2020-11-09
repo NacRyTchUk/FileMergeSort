@@ -45,37 +45,22 @@ namespace FMSParametrsGenerator
             {
             }
         }
-
-        private void BufferValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void restructParameters(object sender, SelectionChangedEventArgs e)
+        {
+            restructParameters();
+        }
+        private void restructParameters(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            restructParameters();
+        }
+        private void restructParameters(object sender, TextChangedEventArgs e)
+        {
+            restructParameters();
+        }
+        private void restructParameters(object sender, RoutedEventArgs e)
         {
             restructParameters();
         }
 
-        private void SortTypeSelectChanged(object sender, SelectionChangedEventArgs e)
-        {
-            restructParameters();
-        }
-
-        private void SortModeSelectChanged(object sender, SelectionChangedEventArgs e)
-        {
-            restructParameters();
-        }
-
-        private void OuputTextChanged(object sender, RoutedEventArgs e)
-        {
-            restructParameters();
-        }
-
-      
-
-        private void InputTextChanged(object sender, TextChangedEventArgs e)
-        {
-            restructParameters();
-        }
-
-        private void CheckedChanded(object sender, RoutedEventArgs e)
-        {
-            restructParameters();
-        }
     }
 }

@@ -27,9 +27,7 @@ namespace fms {
 			isExist();
 		}
 
-		void setData(const FileData * fd) {
-			setData(fd->_fileName,fd->_fileType);
-		}
+		void setData(const FileData * fd) { setData(fd->_fileName,fd->_fileType); }
 
 		FileData() {}
 
@@ -39,10 +37,7 @@ namespace fms {
 			_fileType = fd._fileType;
 		}
 
-		FileData(std::string fileName, FileType fileType)
-		{
-			setData(fileName, fileType); 
-		}
+		FileData(std::string fileName, FileType fileType) { setData(fileName, fileType); }
 
 	private:
 		std::string _fileName{};

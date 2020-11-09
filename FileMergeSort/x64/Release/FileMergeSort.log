@@ -1,0 +1,19 @@
+﻿  Buffer.cpp
+  FileMergeSort.cpp
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.cpp(9,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.cpp(16,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.cpp(16,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  FileMergeSortIO.cpp
+  main.cpp
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSortIO.h(51,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSortIO.h(86,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\Buffer.h(12,26): warning C4244: 'return': conversion from 'int64_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\Buffer.h(23,37): warning C4244: 'argument': conversion from 'int64_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.h(64,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\FileMergeSort.h(83,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  MergeSortFileData.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 432 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  FileMergeSort.vcxproj -> X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FileMergeSort\x64\Release\FileMergeSort.exe
