@@ -9,20 +9,11 @@
 
 namespace fms {
 
-
 	bool isBigger(char*, char*, SortType);
 	bool isFileHasRightFormat(const char*, std::string);
-	
-	
 
 	class FileMergeSort {
 	public:
-		
-
-		FileIO* debug_getFileIO() { return _fileIO; }
-
-
-
 		void sort() {
 			char symbolOfNewLine = '\n';
 			while (_countOfRereadIndex > 0) {
@@ -97,23 +88,16 @@ namespace fms {
 			for (int i{ 0 }; i < _inputFilesCount; ++i)
 				_indexForReread[i] = i;
 			_countOfRereadIndex = _inputFilesCount;
-
-
 		}
 
 		~FileMergeSort() {
 			delete _smartBuffer;
-			
-			
 			delete _fileIO;
-
-
 			for (int i = 0; i < _inputFilesCount; i++)
 				delete [] _currentBottomValues[i];
 			delete[] _currentBottomValues;
 			delete[] _valueBuffer;
 			delete[] _indexForReread;
-			std::cout << "buffer cleaned" << std::endl;
 		}
 	private:
 		SmartBuffer * _smartBuffer;
@@ -121,12 +105,10 @@ namespace fms {
 		SortMode _sortMode;
 		SortType _sortType;
 
-
 		char** _currentBottomValues;
 		char* _valueBuffer;
 		int* _indexForReread;
 		int  _countOfRereadIndex, _inputFilesCount;
-
 
 		void _clearBuffer(char* buffer, int size = MAX_LINE_BUFFER_SIZE, char value = '\0') {
 			for (int i{}; i < size; ++i)

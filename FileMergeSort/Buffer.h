@@ -54,7 +54,7 @@ namespace fms {
 
 		void _pushBack(char* pushText, int textLength, int curLetter = CHAR_MIN) {
 			curLetter = (curLetter == CHAR_MIN) ? textLength - 1 : curLetter;
-			if (_bufferIterator - textLength + (int)(curLetter != textLength - 1) * (curLetter) >= 0) {
+			if (_bufferIterator - textLength + (int64_t)(curLetter != textLength - 1) * (curLetter) >= 0) {
 				while (curLetter >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
 			}
