@@ -4,27 +4,22 @@
 #include <set>
 #include "FileMergeSort.h"
 
-
-
-
 int main(int argc, char* argv[]) {
-
-
 		try
 		{
-			std::set<std::string> param;
+			std::set<std::string> cmdParam;
 			for (int i = 1; i < argc; i++)
-				param.insert(argv[i]);
+				cmdParam.insert(argv[i]);
 
-			if (param.size() < 3)
+			if (cmdParam.size() < 3)
 				throw std::exception("Not all required parameters are declared");
 
-			fms::SortMode sortMode{ (param.find("-d") != param.end()) ? (fms::SortMode::decrease) : fms::SortMode::increase };
+			fms::SortMode sortMode{ (cmdParam.find("-d") != cmdParam.end()) ? (fms::SortMode::decrease) : fms::SortMode::increase };
 
-			if ((param.find("-s") == param.find("-i")))
+			if ((cmdParam.find("-s") == cmdParam.find("-i")))
 				throw std::exception("Required data type parameter is not declared (-s / -i).");
 
-			fms::SortType sortType{ (param.find("-i") != param.end()) ? fms::SortType::integer : fms::SortType::string };
+			fms::SortType sortType{ (cmdParam.find("-i") != cmdParam.end()) ? fms::SortType::integer : fms::SortType::string };
 
 			std::vector<std::string> inputFileNames;
 

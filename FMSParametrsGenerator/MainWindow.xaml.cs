@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FMSParametrsGenerator
 {
@@ -31,14 +20,14 @@ namespace FMSParametrsGenerator
                 return;
             try
             {
-                OutputParametersTextBox.Text = "FileMergeSort.exe ";
+                OutputParametersTextBox.Text = string.Empty;
                 OutputParametersTextBox.Text += (SortModeComboBox.SelectedIndex == 0) ? "-a " : "-d ";
                 OutputParametersTextBox.Text += (SortTypeComboBox.SelectedIndex == 0) ? "-i " : "-s ";
-                OutputParametersTextBox.Text += (Math.Round(BufferSizeSlider.Value) != 50) ? "-b " + Math.Round(BufferSizeSlider.Value).ToString() + " " : "";
+                OutputParametersTextBox.Text += (Math.Round(BufferSizeSlider.Value) != 50) ? "-b " + Math.Round(BufferSizeSlider.Value).ToString() + " " : string.Empty;
                 OutputParametersTextBox.Text += OutputTextBox.Text + " ";
                 if (AutoPostfixAddCheckBox.IsChecked == false)
                 {
-                    OutputParametersTextBox.Text += InputTextBox.Text.Replace(" ", "").Replace("\n", "").Replace("\r"," ");
+                    OutputParametersTextBox.Text += InputTextBox.Text.Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\r"," ");
                 } else
                 {
                   var inputNames =  InputTextBox.Text.Replace(" ", "").Replace('\n', ' ').Split('\r');

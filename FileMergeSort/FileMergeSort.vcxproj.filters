@@ -32,11 +32,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="in1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="FileMergeSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
