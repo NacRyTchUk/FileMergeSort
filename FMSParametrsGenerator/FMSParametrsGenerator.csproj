@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="boost" Version="1.72.0" />
+  </ItemGroup>
+
 </Project>

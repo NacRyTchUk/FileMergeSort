@@ -13,7 +13,7 @@ X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release\netcoreapp3.1\FMSParametrsGenerator.g.resources
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release\netcoreapp3.1\FMSParametrsGenerator.AssemblyInfoInputs.cache
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release\netcoreapp3.1\FMSParametrsGenerator.AssemblyInfo.cs
-X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release\netcoreapp3.1\FMSParametrsGenerator.csproj.CoreCompileInputs.cache
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release\netcoreapp3.1\FMSParametrsGenerator.dll
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release\netcoreapp3.1\FMSParametrsGenerator.pdb
 X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release\netcoreapp3.1\FMSParametrsGenerator.genruntimeconfig.cache
+X:\CTransData\ProjFIles\PlusPlus\FileMergeSort\FMSParametrsGenerator\obj\Release\netcoreapp3.1\FMSParametrsGenerator.csproj.CoreCompileInputs.cache

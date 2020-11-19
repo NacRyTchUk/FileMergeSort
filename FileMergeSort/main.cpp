@@ -3,8 +3,23 @@
 #include <vector>
 #include <set>
 #include "FileMergeSort.h"
+#include "boost\program_options.hpp"
 
 int main(int argc, char* argv[]) {
+	namespace po = boost::program_options;
+	po::options_description desc("General option");
+	std::string input_type;
+
+	desc.add_options()
+		("inc,a","123")
+		("dec,d", "321");
+
+	po::variables_map vm;
+	po::parsed_options parsed = po::command_line_parser(argc, argv).options(desc).allow_unregistered().run();
+	po::store(parsed, vm);
+	po::notify(vm);
+
+
 		try
 		{
 			std::set<std::string> cmdParam;

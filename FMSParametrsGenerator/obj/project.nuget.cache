@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "q0Fi4GcUnqlZsR7Nv/m0kB2t+UpNlMZLj9xh5gRDLK60HEeodrjSjO2WCvshR+VCVDQtkdEups9pYcXdYh3ytg==",
+  "dgSpecHash": "zl4QvV162aVfZPamhta5vIDe8Vf2pUeMNVHG51Fns4O42aSt8xvJpaZwzrGh3h4M63y9+HShGV7kU5tiIhYgUA==",
   "success": true,
   "projectFilePath": "X:\\CTransData\\ProjFIles\\PlusPlus\\FileMergeSort\\FMSParametrsGenerator\\FMSParametrsGenerator.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\NRTU\\.nuget\\packages\\boost\\1.72.0\\boost.1.72.0.nupkg.sha512"
+  ],
   "logs": []
 }
