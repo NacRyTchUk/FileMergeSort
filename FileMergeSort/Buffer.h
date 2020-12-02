@@ -1,8 +1,9 @@
 #include <iostream>
 
+
 #ifndef BUFFER_H
 #define BUFFER_H
-
+#include <functional>
 
 namespace fms {
 
@@ -11,7 +12,7 @@ namespace fms {
 	public:
 		int getSize() { return _bufferSize; }
 
-		void push(char* pushText, int textLength) {
+		void push(const char* pushText, int textLength) {
 			if (_sortMode == SortMode::increase)
 				_pushForward(pushText, textLength);
 			else
@@ -19,17 +20,16 @@ namespace fms {
 		}
 
 		
-		void forceBufferClear() {
-			_fileIO->writeInNewFile(_buffer, _bufferSize);
-
+		void forceBufferClear() { 
+			_pushFunc(_buffer, _bufferSize);
 			_clearBuffer();
 		}
 
-		SmartBuffer(uint64_t bufferSize, SortMode sortMode, FileIO * fileIO) { 
+		SmartBuffer(uint64_t bufferSize, SortMode sortMode, std::function<void(const char*, int)> pushFunc) { 
 			_bufferSize = bufferSize;
 			_buffer = new char[bufferSize + 1]{};
 			_sortMode = sortMode;
-			_fileIO = fileIO; 
+			_pushFunc = pushFunc;
 			_clearBuffer();
 		}
 
@@ -42,7 +42,7 @@ namespace fms {
 	private:
 		char* _buffer;
 		int64_t _bufferSize, _bufferIterator{};
-		FileIO* _fileIO; 
+		std::function<void(const char*, int)> _pushFunc;
 		SortMode _sortMode;
 
 
@@ -52,7 +52,7 @@ namespace fms {
 			_bufferIterator = (int)(_sortMode == SortMode::decrease) * (_bufferSize - 2);
 		}
 
-		void _pushBack(char* pushText, int textLength, int curLetter = CHAR_MIN) {
+		void _pushBack(const char* pushText, int textLength, int curLetter = CHAR_MIN) {
 			curLetter = (curLetter == CHAR_MIN) ? textLength - 1 : curLetter;
 			if (_bufferIterator - textLength + (int64_t)(curLetter != textLength - 1) * (curLetter) >= 0) {
 				while (curLetter >= 0)
@@ -62,13 +62,15 @@ namespace fms {
 			{
 				while (_bufferIterator >= 0)
 					_buffer[_bufferIterator--] = pushText[curLetter--];
+
 				forceBufferClear();
 				_pushBack(pushText, textLength, curLetter);
+
 			}
 		}
 
-		void _pushForward(char* pushText, int textLength) {
-			_fileIO->writeInOutFile(pushText, textLength);
+		void _pushForward(const char* pushText, int textLength) {
+			_pushFunc(pushText, textLength);
 		}
 
 		void _fillWhileLower(int * aNumb, int*bNumb, char * fillText, int * incNumb = 0) {

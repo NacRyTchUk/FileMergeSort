@@ -5,8 +5,18 @@
 #include "FileMergeSort.h"
 #include "boost\program_options.hpp"
 
+/*/
+===========TODO=============
+~Multithreading for pushing in buffer
+~Read-all file instead of read-each-line in finalization part
++multi-file iterator realization
+~std::boost start option
+~snake case lmao
+
+*/
+
 int main(int argc, char* argv[]) {
-	namespace po = boost::program_options;
+	/*namespace po = boost::program_options;
 	po::options_description desc("General option");
 	std::string input_type;
 
@@ -17,7 +27,7 @@ int main(int argc, char* argv[]) {
 	po::variables_map vm;
 	po::parsed_options parsed = po::command_line_parser(argc, argv).options(desc).allow_unregistered().run();
 	po::store(parsed, vm);
-	po::notify(vm);
+	po::notify(vm);*/
 
 
 		try

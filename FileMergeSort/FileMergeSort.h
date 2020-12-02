@@ -9,63 +9,56 @@
 
 namespace fms {
 
-	bool isBigger(char*, char*, SortType);
+
+	
+
+	bool isBigger(const char*, const char*, SortType);
 	bool isFileHasRightFormat(const char*, std::string);
 
 	class FileMergeSort {
 	public:
 		void sort() {
-			char symbolOfNewLine = '\n';
-			while (_countOfRereadIndex > 0) {
-				FileData* filesData = _fileIO->getFilesData();
-				if (_countOfRereadIndex < 1)
-					return;
+			const char symbolOfNewLine = '\n';
+			
+			FileIO::Multi_files_iterator mfit(_fileIO);
+			std::vector<char*> last_values;
+				for (size_t i = 0; i < mfit.get_files_count(); i++)	last_values.push_back(new char[MAX_LINE_BUFFER_SIZE] {});
+			int min_indexes_count{};
+			int* min_indexes = new int[mfit.get_files_count()];
+				for (int i = 0; i < min_indexes_count; i++)	min_indexes[i] = i;
 
-				for (int i = 0; i < _countOfRereadIndex; i++)
-					if (filesData[_indexForReread[i] + 1].getType() == FileType::input)
+			while (mfit.get_files_count() > 0)
+			{
+				for (int i = min_indexes_count - 1; i >= 0 ; --i)
+					if (isBigger(last_values[min_indexes[i]], mfit[min_indexes[i]], _sortType))
 					{
-						_clearBuffer(_valueBuffer);
-						_fileIO->readLineFrom(_indexForReread[i] + 1, _valueBuffer, MAX_LINE_BUFFER_SIZE);
-						if (isBigger(_currentBottomValues[_indexForReread[i]], _valueBuffer, _sortType))
-							//throw std::exception("Incorrectly sorted file");
-						{
-							filesData[_indexForReread[i] + 1].changeType(FileType::corrupt);
-							std::cerr << "A non-critical error was detected: the file \"" << filesData[_indexForReread[i] + 1].getName() <<
-								"\" was sorted Incorrectly. Sorting will continue with data loss." << std::endl;
-							continue;
-						}
-						_clearBuffer(_currentBottomValues[_indexForReread[i]]);
-						strcat_s(_currentBottomValues[_indexForReread[i]], MAX_LINE_BUFFER_SIZE, _valueBuffer);
+						//=-=-=-=-=-=-=
+						if (mfit[min_indexes[i]][0] != '\0') 
+							std::cerr << "A non-critical error was detected: a file was sorted Incorrectly. Sorting will continue with data loss." << std::endl;
+						mfit.remove(min_indexes[i]);
+						last_values.erase(last_values.begin() + min_indexes[i]);
 					}
-
-
-				_countOfRereadIndex = 0;
-				int minInd{ -1 };
-				while ((filesData[++minInd + 1].getType() != FileType::input) && (minInd < _inputFilesCount)) {}
-
-				for (int i = minInd; i < _inputFilesCount; i++)
+					else strcpy_s(last_values[min_indexes[i]], MAX_LINE_BUFFER_SIZE, mfit[min_indexes[i]]);
+				
+				int minInd = min_indexes_count = 0;
+				for (int i = minInd; i < mfit.get_files_count(); i++)
 				{
-					if (filesData[i + 1].getType() == FileType::input)
-					{
-						if (isBigger(_currentBottomValues[minInd], _currentBottomValues[i], _sortType))
-						{
-							minInd = i;
-							_countOfRereadIndex = 0;
-						}
-						if (strcmp(_currentBottomValues[minInd], _currentBottomValues[i]) == 0)
-							_indexForReread[_countOfRereadIndex++] = i;
-					}
+					if (isBigger(mfit[minInd], mfit[i], _sortType)) minInd = i + (min_indexes_count = 0);
+					if (strcmp(mfit[minInd], mfit[i]) == 0) min_indexes[min_indexes_count++] = i;
 				}
 
-				
-				for (int i = 0; i < _countOfRereadIndex; i++)
+				//place for multithreading
+				for (int i = 0; i < min_indexes_count; i++)
 				{
-
-					_smartBuffer->push(_currentBottomValues[minInd], strlen(_currentBottomValues[minInd]));
+					_smartBuffer->push(mfit[minInd], strlen(mfit[minInd]));
 					_smartBuffer->push(&symbolOfNewLine, 1);
 				}
+				mfit.next(min_indexes, min_indexes_count);
 			}
-
+			
+			delete[] min_indexes;
+			for (auto el : last_values)
+				delete[] el;
 			_smartBuffer->forceBufferClear();
 
 			_fileIO->finalize(_sortMode);
@@ -77,38 +70,19 @@ namespace fms {
 			
 			_fileIO = new FileIO(inputFileNames, outputFileName);
 
-			_smartBuffer = new SmartBuffer(bufferByteSize, _sortMode, _fileIO);
-			_valueBuffer = new char[MAX_LINE_BUFFER_SIZE];
-
-			_inputFilesCount = inputFileNames.size();
-			 _currentBottomValues = new char*[_inputFilesCount];
-			for (int i{}; i < _inputFilesCount; ++i)
-				_currentBottomValues[i] = new char[MAX_LINE_BUFFER_SIZE] {0};
-			_indexForReread = new int[_inputFilesCount];
-			for (int i{ 0 }; i < _inputFilesCount; ++i)
-				_indexForReread[i] = i;
-			_countOfRereadIndex = _inputFilesCount;
+			_smartBuffer = new SmartBuffer(bufferByteSize, _sortMode, [&](const char* text, int textLength) {
+					if (_sortMode == SortMode::decrease) _fileIO->writeInNewFile(text, textLength);
+					else _fileIO->writeInOutFile(text,textLength);
+				});
 		}
 
 		~FileMergeSort() {
-			delete _smartBuffer;
-			delete _fileIO;
-			for (int i = 0; i < _inputFilesCount; i++)
-				delete [] _currentBottomValues[i];
-			delete[] _currentBottomValues;
-			delete[] _valueBuffer;
-			delete[] _indexForReread;
 		}
 	private:
-		SmartBuffer * _smartBuffer;
+		SmartBuffer* _smartBuffer;
 		FileIO* _fileIO;
 		SortMode _sortMode;
 		SortType _sortType;
-
-		char** _currentBottomValues;
-		char* _valueBuffer;
-		int* _indexForReread;
-		int  _countOfRereadIndex, _inputFilesCount;
 
 		void _clearBuffer(char* buffer, int size = MAX_LINE_BUFFER_SIZE, char value = '\0') {
 			for (int i{}; i < size; ++i)

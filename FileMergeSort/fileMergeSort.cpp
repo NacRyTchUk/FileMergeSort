@@ -12,9 +12,9 @@ namespace fms {
 		return true;
 	}
 
-	bool isBigger(char* a, char* b, SortType sortType) {
+	bool isBigger(const char* a, const char* b, SortType sortType) {
 		int lenA = strlen(a), lenB = strlen(b);
-		if (lenB == 0) return false;
+		//if (lenB == 0) return false;
 		return (lenA == lenB) || (sortType == SortType::string) ? (strcmp(a, b) > 0) : (lenA > lenB);
 	}
 

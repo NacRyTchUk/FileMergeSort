@@ -141,11 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="FileMergeSort.cpp" />
-    <ClCompile Include="FileMergeSortIO.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MergeSortFileData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h" />
