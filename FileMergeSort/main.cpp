@@ -9,9 +9,11 @@
 ===========TODO=============
 ~Multithreading for pushing in buffer
 ~Read-all file instead of read-each-line in finalization part
-+multi-file iterator realization
+++++++++++++multi-file iterator realization
 ~std::boost start option
 ~snake case lmao
+~test for exception handled
+~test for big (really big) files
 
 */
 
